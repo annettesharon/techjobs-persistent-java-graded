@@ -11,7 +11,7 @@ import java.util.List;
 public class Skill extends AbstractEntity {
 
     @NotBlank
-    @Size(min = 3, max = 500)
+    @Size(min = 3, max = 250)
     private String description;
 
     // creates a many to many relationship mapped by skills

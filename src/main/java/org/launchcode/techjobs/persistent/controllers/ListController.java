@@ -1,8 +1,10 @@
 package org.launchcode.techjobs.persistent.controllers;
 
 import org.launchcode.techjobs.persistent.models.Job;
-import org.launchcode.techjobs.persistent.models.data.JobRepository;
 import org.launchcode.techjobs.persistent.models.JobData;
+import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
+import org.launchcode.techjobs.persistent.models.data.JobRepository;
+import org.launchcode.techjobs.persistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +20,22 @@ import java.util.HashMap;
 @RequestMapping(value = "list")
 public class ListController {
 
+    // injects EmployerRepository and allows us to access data from the table
+    @Autowired
+    private EmployerRepository employerRepository;
+
+    // injects SkillRepository and allows us to access data from the table
+    @Autowired
+    private SkillRepository skillRepository;
+
+    // injects JobRepository and allows us to access data from the table
     @Autowired
     private JobRepository jobRepository;
 
+    // initializes a new HashMap of column choices for list
     static HashMap<String, String> columnChoices = new HashMap<>();
 
+    //
     public ListController () {
 
         columnChoices.put("all", "All");
@@ -31,12 +44,15 @@ public class ListController {
 
     }
 
+    // lists all employers and skills by category
     @RequestMapping("")
     public String list(Model model) {
-
+        model.addAttribute("skills", skillRepository.findAll());
+        model.addAttribute("employers", employerRepository.findAll());
         return "list";
     }
 
+    // lists jobs by columns with skills or employers
     @RequestMapping(value = "jobs")
     public String listJobsByColumnAndValue(Model model, @RequestParam String column, @RequestParam String value) {
         Iterable<Job> jobs;

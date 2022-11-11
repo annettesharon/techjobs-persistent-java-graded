@@ -15,19 +15,18 @@ import java.util.Optional;
 @RequestMapping("employers")
 public class EmployerController {
 
-
-    // injects EmployerRepository and allows us to access data inside of the table
+    // injects EmployerRepository and allows us to access data from the table
     @Autowired
     private EmployerRepository employerRepository;
 
-    // displays our add employer form
+    // displays add employer form
     @GetMapping("add")
     public String displayAddEmployerForm(Model model) {
         model.addAttribute(new Employer());
         return "employers/add";
     }
 
-    // processes our add employer form and creates and saves a new employer
+    // processes add employer form and creates and saves a new employer
     @PostMapping("add")
     public String processAddEmployerForm(@ModelAttribute @Valid Employer newEmployer,
                                          Errors errors, Model model) {

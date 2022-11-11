@@ -12,10 +12,11 @@ import java.util.List;
 public class Employer extends AbstractEntity {
 
     @NotBlank(message = "Name is required!")
-    @Size(min=3, max=100)
+    @Size(min=3, max=15)
     private String location;
 
     // creates a one to many relationship to jobs by employer_id
+    // list of all items in a given job
     @OneToMany
     @JoinColumn(name = "employer_id")
     private List<Job> jobs = new ArrayList<>();
